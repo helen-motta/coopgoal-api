@@ -1,0 +1,33 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-coopgoal}
+      POSTGRES_USER: ${POSTGRES_USER:-coopgoal}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-coopgoal-local}
+    ports:
+      - "5432:5432"
+    volumes:
+      - coopgoal-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-coopgoal} -d ${POSTGRES_DB:-coopgoal}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build: .
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-coopgoal}
+      DB_USERNAME: ${POSTGRES_USER:-coopgoal}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-coopgoal-local}
+      JWT_SECRET: ${JWT_SECRET:-local-development-secret-with-32-characters}
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-prod}
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  coopgoal-postgres:
