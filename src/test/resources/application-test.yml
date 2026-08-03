@@ -1,0 +1,8 @@
+security:
+  jwt:
+    secret: integration-test-secret-with-more-than-32-characters
+    expiration: PT1H
+spring:
+  task:
+    scheduling:
+      enabled: false
