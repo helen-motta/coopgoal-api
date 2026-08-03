@@ -1,6 +1,6 @@
 # CoopGoal API
 
-API REST para criar e acompanhar metas financeiras colaborativas. O CoopGoal organiza grupos, participantes, metas, contribuições simuladas, recorrências e decisões coletivas por votação — sem movimentar dinheiro real.
+API REST para criar e acompanhar metas financeiras colaborativas. O CoopGoal organiza grupos, participantes, metas, contribuições simuladas, recorrências e decisões coletivas por votação.
 
 ## Problema resolvido
 
